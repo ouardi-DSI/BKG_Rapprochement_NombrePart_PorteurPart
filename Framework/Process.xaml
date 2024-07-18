@@ -10,11 +10,12 @@
     <x:Property Name="in_CHemin_Extraction_Depositaire" Type="InArgument(x:String)" />
     <x:Property Name="in_Chemin_Mapping" Type="InArgument(x:String)" />
     <x:Property Name="in_Chemin_Template_Rapport" Type="InArgument(x:String)" />
+    <x:Property Name="in_Mail" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>847,2798</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1153,1674</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="50">
@@ -126,9 +127,10 @@
       <AssemblyReference>System.Collections.Immutable</AssemblyReference>
       <AssemblyReference>System.Linq.Queryable</AssemblyReference>
       <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="1433,2527" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="512,1609" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="DT_Sophis" />
       <Variable x:TypeArguments="x:String" Name="CHemin_Extraction_Sophis" />
@@ -157,29 +159,34 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Log_Debut - Invoke Workflow File (Logs\Log_Debut.xaml)" sap:VirtualizedContainerService.HintSize="1371,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Logs\Log_Debut.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Log_Debut - Invoke Workflow File (Logs\Log_Debut.xaml)" sap:VirtualizedContainerService.HintSize="450,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Logs\Log_Debut.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_Workflow_name">Process</InArgument>
         <InOutArgument x:TypeArguments="x:String" x:Key="io_StepWorkflow">[io_StepWorkflow]</InOutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <Assign sap:VirtualizedContainerService.HintSize="1371,114" sap2010:WorkflowViewState.IdRef="Assign_37">
+    <Assign sap:VirtualizedContainerService.HintSize="450,114" sap2010:WorkflowViewState.IdRef="Assign_37">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[Prefixe_Chemin_Archive]</OutArgument>
       </Assign.To>
       <Assign.Value>
         <InArgument x:TypeArguments="x:String">[in_CHemin_Archive.trimend("\"c) + "\" + "Execution " + Now.tostring("dd-MM-yyyy HH_mm_ss")]</InArgument>
       </Assign.Value>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </Assign>
-    <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="1371,173" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recuperation_Extraction_Passif_SoldePorteur - Invoke Workflow File (Sophis\Recuperation_Extraction_Passif_SoldePorteur.xaml)" sap:VirtualizedContainerService.HintSize="758,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Sophis\Recuperation_Extraction_Passif_SoldePorteur.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Recuperation_Extraction_Passif_SoldePorteur - Invoke Workflow File (Sophis\Recuperation_Extraction_Passif_SoldePorteur.xaml)" sap:VirtualizedContainerService.HintSize="450,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Sophis\Recuperation_Extraction_Passif_SoldePorteur.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InOutArgument x:TypeArguments="x:String" x:Key="io_StepWorkflow">[io_StepWorkflow]</InOutArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_Date">[in_Date_ExtractionPorteurPart]</InArgument>
         <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_DT_Part_porteur">[DT_Sophis]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <Sequence DisplayName="Sauvegarde_Extraction_Sophis" sap:VirtualizedContainerService.HintSize="758,57" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence DisplayName="Sauvegarde_Extraction_Sophis" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -237,7 +244,7 @@
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <Sequence DisplayName="Sauvegarde_Extraction_Depositaire" sap:VirtualizedContainerService.HintSize="758,57" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Sequence DisplayName="Sauvegarde_Extraction_Depositaire" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -279,7 +286,7 @@
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <Sequence DisplayName="Création_Fichier_Rapport" sap:VirtualizedContainerService.HintSize="758,57" sap2010:WorkflowViewState.IdRef="Sequence_11">
+    <Sequence DisplayName="Création_Fichier_Rapport" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="Sequence_11">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -321,7 +328,7 @@
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <Sequence DisplayName="LectureFichierMapping" sap:VirtualizedContainerService.HintSize="758,57" sap2010:WorkflowViewState.IdRef="Sequence_4">
+    <Sequence DisplayName="LectureFichierMapping" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="Sequence_4">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -331,7 +338,7 @@
       <ui:ReadRange AddHeaders="True" DataTable="[DT_MappingFonds]" DisplayName="Read Range Workbook" sap:VirtualizedContainerService.HintSize="388,120" sap2010:WorkflowViewState.IdRef="ReadRange_1" Range="A1" SheetName="Mapping_Fonds" WorkbookPath="[in_Chemin_Mapping]" />
       <ui:ReadRange AddHeaders="True" DataTable="[DT_MappingPorteur]" DisplayName="Read Range Workbook" sap:VirtualizedContainerService.HintSize="388,111" sap2010:WorkflowViewState.IdRef="ReadRange_2" Range="A1" SheetName="mapping_Nom" WorkbookPath="[in_Chemin_Mapping]" />
     </Sequence>
-    <Sequence DisplayName="Construction Dictionnaire Porteur Sophis Depositaire" sap:VirtualizedContainerService.HintSize="758,57" sap2010:WorkflowViewState.IdRef="Sequence_5">
+    <Sequence DisplayName="Construction Dictionnaire Porteur Sophis Depositaire" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="Sequence_5">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -383,7 +390,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </ui:ForEachRow>
     </Sequence>
-    <Sequence DisplayName="Ajustement_Format_Rapport" sap:VirtualizedContainerService.HintSize="758,57" sap2010:WorkflowViewState.IdRef="Sequence_12">
+    <Sequence DisplayName="Ajustement_Format_Rapport" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="Sequence_12">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -461,7 +468,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </ui:ExcelApplicationScope>
     </Sequence>
-    <Delay Duration="00:00:02" sap:VirtualizedContainerService.HintSize="758,57" sap2010:WorkflowViewState.IdRef="Delay_1">
+    <Delay Duration="00:00:02" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="Delay_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -469,7 +476,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </Delay>
-    <Sequence DisplayName="Lecture_Fichier_Depositaire" sap:VirtualizedContainerService.HintSize="758,57" sap2010:WorkflowViewState.IdRef="Sequence_14">
+    <Sequence DisplayName="Lecture_Fichier_Depositaire" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="Sequence_14">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -500,13 +507,14 @@
         </sap:WorkflowViewStateService.ViewState>
       </ui:ExcelApplicationScope>
     </Sequence>
-    <Sequence DisplayName="Traitement_Rapprochement" sap:VirtualizedContainerService.HintSize="1371,1021" sap2010:WorkflowViewState.IdRef="Sequence_15">
+    <Sequence DisplayName="Traitement_Rapprochement" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="Sequence_15">
       <Sequence.Variables>
         <Variable x:TypeArguments="x:Int32" Name="Index_Rapport" />
       </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="[Index_Rapport]" DataTable="[DT_MappingFonds]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="1309,933" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
@@ -4927,7 +4935,17 @@
         </sap:WorkflowViewStateService.ViewState>
       </ui:ForEachRow>
     </Sequence>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Log_Fin - Invoke Workflow File (Logs\Log_Fin.xaml)" sap:VirtualizedContainerService.HintSize="758,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Logs\Log_Fin.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Envoie_Mail - Invoke Workflow File (Mail\Envoie_Mail.xaml)" sap:VirtualizedContainerService.HintSize="450,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Mail\Envoie_Mail.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InOutArgument x:TypeArguments="x:String" x:Key="io_StepWorkflow">[io_StepWorkflow]</InOutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_MailTo">[in_Mail]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_MailSubject">[in_config("Reponse_Objet_Mail").ToString]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_MailBody">[in_Config("Reponse_Corps_Mail").ToString.replace("&lt;Date_Depo&gt;",in_DateDepositaire)]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_attachment">[Chemin_Rapport]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_MailCC">[in_config("Mail_cc").ToString]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Log_Fin - Invoke Workflow File (Logs\Log_Fin.xaml)" sap:VirtualizedContainerService.HintSize="450,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Logs\Log_Fin.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_Workflow_name">Process</InArgument>
         <InOutArgument x:TypeArguments="x:String" x:Key="io_StepWorkflow">[io_StepWorkflow]</InOutArgument>
