@@ -96,9 +96,11 @@
       <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
       <AssemblyReference>System.Private.Xml</AssemblyReference>
       <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Recuperation_Extraction_Passif_SoldePorteur" sap:VirtualizedContainerService.HintSize="416,725" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Recuperation_Extraction_Passif_SoldePorteur" sap:VirtualizedContainerService.HintSize="1853,786.04" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="ui:DatabaseConnection" Name="DB_Connexion" />
     </Sequence.Variables>
@@ -107,19 +109,19 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Log_Debut - Invoke Workflow File (Logs\Log_Debut.xaml)" sap:VirtualizedContainerService.HintSize="354,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Logs\Log_Debut.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Log_Debut - Invoke Workflow File (Logs\Log_Debut.xaml)" sap:VirtualizedContainerService.HintSize="416,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Logs\Log_Debut.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_Workflow_name">Recuperation_Extraction</InArgument>
         <InOutArgument x:TypeArguments="x:String" x:Key="io_StepWorkflow">[io_StepWorkflow]</InOutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:DatabaseConnect DisplayName="Connect to database" sap:VirtualizedContainerService.HintSize="354,92" sap2010:WorkflowViewState.IdRef="DatabaseConnect_1" ProviderName="Oracle.ManagedDataAccess.Client" ConnectionString="USER ID=bmce;DATA SOURCE=&quot;(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.110.101.28)(PORT = 1521)))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = sophis)))&quot;;PASSWORD=bmce" DatabaseConnection="[DB_Connexion]" />
-    <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" DataTable="[out_DT_Part_porteur]" DisplayName="Run query" ExistingDbConnection="[DB_Connexion]" sap:VirtualizedContainerService.HintSize="354,146" sap2010:WorkflowViewState.IdRef="ExecuteQuery_2" Sql="[&quot;select f.name opcvm, &quot;+&#xD;&#xA;&quot;client.name as porteur, &quot;+&#xD;&#xA;&quot;compte.name as  n_compte,client.ident ID_Client,compte.id ID_Compte, &quot;+&#xD;&#xA;&quot;sum(sousRach.number_shares) as position,bmce_util_report_sdg.getcours(f.sicovam,to_date('&quot;+in_Date+&quot;','dd/mm/yyyy')) VL &quot;+&#xD;&#xA;&quot;from fund_purchase sousRach ,Tiers client,am_investor_accounts compte, &quot;+&#xD;&#xA;&quot;(select sicovam,libelle name,mnemo_v2 from titres where type='Z' and typepro=1 and lower(libelle) not like '%ZZ%' ) f &quot;+&#xD;&#xA;&quot;where &quot;+&#xD;&#xA;&quot;sousRach.third1 = client.ident(+) &quot;+&#xD;&#xA;&quot;and sousRach.inv_depo_instr_account =  compte.id(+) &quot;+&#xD;&#xA;&quot;and sousRach.fund = f.sicovam  &quot;+&#xD;&#xA;&quot;and sousRach.backoffice in (select kernel_status_id from  BO_KERNEL_STATUS_COMPONENT where kernel_status_group_id in (select id from BO_KERNEL_STATUS_GROUP where name in('ALL') and record_type=1)) &quot;+&#xD;&#xA;&quot;and sousRach.nav_date&lt;=to_date('&quot;+in_Date+&quot;','dd/mm/yyyy') &quot;+&#xD;&#xA;&quot;group by f.name,client.name,compte.name,f.sicovam,client.ident,compte.id &quot;+&#xD;&#xA;&quot;having sum(sousRach.number_shares)&lt;&gt;0 &quot;+&#xD;&#xA;&quot;order by f.name,client.name &quot;]">
+    <ui:DatabaseConnect DisplayName="Connect to database" sap:VirtualizedContainerService.HintSize="416,92" sap2010:WorkflowViewState.IdRef="DatabaseConnect_1" ProviderName="Oracle.ManagedDataAccess.Client" ConnectionString="USER ID=bmce;DATA SOURCE=&quot;(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.110.101.28)(PORT = 1521)))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = sophis)))&quot;;PASSWORD=bmce" DatabaseConnection="[DB_Connexion]" />
+    <ui:ExecuteQuery ContinueOnError="{x:Null}" DataTable="[out_DT_Part_porteur]" DisplayName="Run query" ExistingDbConnection="[DB_Connexion]" sap:VirtualizedContainerService.HintSize="416,146" sap2010:WorkflowViewState.IdRef="ExecuteQuery_2" Sql="[&quot;select f.name opcvm, &quot;+&#xD;&#xA;&quot;client.name as porteur, &quot;+&#xD;&#xA;&quot;compte.name as  n_compte,client.ident ID_Client,compte.id ID_Compte, &quot;+&#xD;&#xA;&quot;sum(sousRach.number_shares) as position,bmce_util_report_sdg.getcours(f.sicovam,to_date('&quot;+in_Date+&quot;','dd/mm/yyyy')) VL &quot;+&#xD;&#xA;&quot;from fund_purchase sousRach ,Tiers client,am_investor_accounts compte, &quot;+&#xD;&#xA;&quot;(select sicovam,libelle name,mnemo_v2 from titres where type='Z' and typepro=1 and lower(libelle) not like '%ZZ%' ) f &quot;+&#xD;&#xA;&quot;where &quot;+&#xD;&#xA;&quot;sousRach.third1 = client.ident(+) &quot;+&#xD;&#xA;&quot;and sousRach.inv_depo_instr_account =  compte.id(+) &quot;+&#xD;&#xA;&quot;and sousRach.fund = f.sicovam  &quot;+&#xD;&#xA;&quot;and sousRach.backoffice in (select kernel_status_id from  BO_KERNEL_STATUS_COMPONENT where kernel_status_group_id in (select id from BO_KERNEL_STATUS_GROUP where name in('ALL') and record_type=1)) &quot;+&#xD;&#xA;&quot;and sousRach.nav_date&lt;=to_date('&quot;+in_Date+&quot;','dd/mm/yyyy') &quot;+&#xD;&#xA;&quot;group by f.name,client.name,compte.name,f.sicovam,client.ident,compte.id &quot;+&#xD;&#xA;&quot;having sum(sousRach.number_shares)&lt;&gt;0 &quot;+&#xD;&#xA;&quot;order by f.name,client.name &quot;]" TimeoutMS="300000">
       <ui:ExecuteQuery.Parameters>
         <scg:Dictionary x:TypeArguments="x:String, Argument" />
       </ui:ExecuteQuery.Parameters>
     </ui:ExecuteQuery>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Log_Fin - Invoke Workflow File (Logs\Log_Fin.xaml)" sap:VirtualizedContainerService.HintSize="354,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Logs\Log_Fin.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Log_Fin - Invoke Workflow File (Logs\Log_Fin.xaml)" sap:VirtualizedContainerService.HintSize="416,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Logs\Log_Fin.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_Workflow_name">Recuperation_Extraction</InArgument>
         <InOutArgument x:TypeArguments="x:String" x:Key="io_StepWorkflow">[io_StepWorkflow]</InOutArgument>
